@@ -119,6 +119,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "govcarpeta-fe"
+    }
+  },
+  "defaultProject": "govcarpeta-fe",
+  "cli": {
+    "analytics": false
+  }
 }

@@ -1,0 +1,11 @@
+<div class="container">
+  <header class="jumbotron">
+    <p>{{ content }}</p>
+    <ul *ngIf="citizens.length > 0">
+      <li>Lista de ciudadanos registrados:</li>
+      <li *ngFor="let citizen of citizens">
+        {{citizen.id}} - {{citizen.name}}
+      </li>
+    </ul>
+  </header>
+</div>
