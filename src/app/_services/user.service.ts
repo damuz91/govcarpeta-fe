@@ -24,10 +24,7 @@ export class UserService {
   }
 
   postDocument(document): Observable<any> {
-    return this.http.post(API_URL + 'documents', {
-      file: document.file, 
-      title: document.title
-    }, httpOptions)
+    return this.http.post(API_URL + 'documents', document)
   }
 
 }

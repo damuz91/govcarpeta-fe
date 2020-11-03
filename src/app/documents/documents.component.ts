@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../_services/user.service';
+import { FormGroup, FormControl, Validators} from '@angular/forms';
+
 
 @Component({
   selector: 'app-documents',
@@ -11,12 +13,21 @@ export class DocumentsComponent implements OnInit {
   documents: any[];
   content: string;
 
-  form: any = {};
+  myForm = new FormGroup({
+    title: new FormControl('', [Validators.required, Validators.minLength(3)]),
+    file: new FormControl('', [Validators.required]),
+    fileSource: new FormControl('', [Validators.required])
+  });
+
   isUploaded = false;
   isUploadFailed = false;
   errorMessage = '';
 
   constructor(private userService: UserService) { }
+
+  get f(){
+    return this.myForm.controls;
+  }
 
   ngOnInit(): void {
     this.documents = []
@@ -41,20 +52,37 @@ export class DocumentsComponent implements OnInit {
     )
   }
 
-  onSubmit(): void {
-    this.userService.postDocument(this.form).subscribe(
+  onFileChange(event) {
+    if (event.target.files.length > 0) {
+      const file = event.target.files[0];
+      this.myForm.get('fileSource').setValue(file);
+    }
+  }
+
+
+
+  submit(): void {
+
+    const formData = new FormData();
+    formData.append('file', this.myForm.get('fileSource').value);
+    formData.append('title', this.myForm.get('title').value);
+
+
+    this.userService.postDocument(formData).subscribe(
       data => {
         this.isUploadFailed = false;
         this.isUploaded = true;
         this.reloadPage();
       },
       err => {
-        this.errorMessage = err.error.message;
+        this.errorMessage = err.error;
         this.isUploadFailed = true;
         this.isUploaded = false;
       }
     );
   }
+
+  
 
   reloadPage(): void {
     window.location.reload();

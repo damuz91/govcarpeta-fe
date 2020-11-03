@@ -2,38 +2,47 @@
 <p>{{content}}</p>
 
 <span *ngIf="documents.length > 0">Lista de documentos ingresados:</span>
-<ul *ngIf="documents.length > 0">
+<table class="table">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Titulo</th>
+      <th>Autenticado</th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let document of documents">
+      <td>{{ document.id }}</td>
+      <td><a href="{{document.url}}" target="_blank">{{document.title}}</a></td>
+      <td>
+        <span *ngIf="document.authenticated">✅</span>
+        <span *ngIf="!document.authenticated">🚫</span>
+      </td>
+      <td>
+        <a *ngIf="!document.authenticated" href="javascript:void(0)">✅ Autenticar</a>
+        <a href="javascript:void(0)">🗑 Eliminar</a>
+      </td>
+    </tr>
+  </tbody>
+</table>
   
-  <li *ngFor="let document of documents">
-    {{document.id}} - {{document.title}}
-  </li>
-</ul>
 
 
 <div class="col-md-12">
   <div class="card card-container">
     <h3>Nuevo documento</h3>
-    <form
-      name="form"
-      (ngSubmit)="f.form.valid && onSubmit()"
-      #f="ngForm"
-      novalidate
-    >
+    <form [formGroup]="myForm" (ngSubmit)="submit()">
+    
       <div class="form-group">
         <label for="title">Titulo</label>
         <input
+          formControlName="title"
+          id="title"
           type="text"
-          class="form-control"
           name="title"
-          [(ngModel)]="form.title"
-          required
-          #title="ngModel"
-        />
-        <div
-          class="alert alert-danger"
-          role="alert"
-          *ngIf="f.submitted && title.invalid"
-        >
+          class="form-control">
+        <div *ngIf="f.title.touched && f.title.invalid" class="alert alert-danger" role="alert">
           Título es requerido
         </div>
       </div>
@@ -43,17 +52,16 @@
           type="file"
           class="form-control"
           name="file"
-          [(ngModel)]="form.file"
           required
-          minlength="6"
-          #file="ngModel"
+          formControlName="file"
+          (change)="onFileChange($event)"
         />
         <div
           class="alert alert-danger"
           role="alert"
-          *ngIf="f.submitted && file.invalid"
+          *ngIf="f.file.touched && f.file.invalid"
         >
-          <div *ngIf="file.errors.required">Es requerido</div>
+          <div *ngIf="f.file.errors.required">Es requerido</div>
         </div>
       </div>
       <div class="form-group">
@@ -67,7 +75,7 @@
           role="alert"
           *ngIf="f.submitted && isUploadFailed"
         >
-          Subit archivo falló: {{ errorMessage }}
+          Upload archivo falló: {{ errorMessage }}
         </div>
       </div>
     </form>

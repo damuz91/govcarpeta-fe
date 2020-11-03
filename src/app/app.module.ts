@@ -16,6 +16,9 @@ import { authInterceptorProviders } from './_helpers/auth.interceptor';
 import { ProfileComponent } from './profile/profile.component';
 import { DocumentsComponent } from './documents/documents.component';
 
+import { ReactiveFormsModule } from '@angular/forms';
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -29,6 +32,7 @@ import { DocumentsComponent } from './documents/documents.component';
     BrowserModule,
     AppRoutingModule,
     FormsModule,
+    ReactiveFormsModule,
     RouterModule,
     HttpClientModule
   ],
