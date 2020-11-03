@@ -27,4 +27,12 @@ export class UserService {
     return this.http.post(API_URL + 'documents', document)
   }
 
+  deleteDocument(document_id): Observable<any> {
+    return this.http.delete(API_URL + 'documents/' + document_id)
+  }
+
+  authenticateDocument(document_id): Observable<any> {
+    return this.http.post(API_URL + 'documents/' + document_id + '/authenticate',{})
+  }
+
 }

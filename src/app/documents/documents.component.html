@@ -20,8 +20,8 @@
         <span *ngIf="!document.authenticated">🚫</span>
       </td>
       <td>
-        <a *ngIf="!document.authenticated" href="javascript:void(0)">✅ Autenticar</a>
-        <a href="javascript:void(0)">🗑 Eliminar</a>
+        <a *ngIf="!document.authenticated" href="javascript:void(0)" (click)="authenticateDocument(document.id)">✅ Autenticar</a>
+        <a href="javascript:void(0)" (click)="deleteDocument(document.id)">🗑 Eliminar</a>
       </td>
     </tr>
   </tbody>

@@ -82,7 +82,26 @@ export class DocumentsComponent implements OnInit {
     );
   }
 
-  
+  deleteDocument(document_id): void{
+    this.userService.deleteDocument(document_id).subscribe(
+      data => {
+        this.reloadPage();
+      },err => {
+        this.errorMessage = err.error;
+      }
+    )
+  }
+
+  authenticateDocument(document_id): void{
+    this.userService.authenticateDocument(document_id).subscribe(
+      data => {
+        this.reloadPage();
+      },err => {
+        this.errorMessage = err.error;
+      }
+    )
+  }
+
 
   reloadPage(): void {
     window.location.reload();
