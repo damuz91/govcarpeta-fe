@@ -1,0 +1,79 @@
+<h1>Mis documentos</h1>
+<p>{{content}}</p>
+
+<span *ngIf="documents.length > 0">Lista de documentos ingresados:</span>
+<ul *ngIf="documents.length > 0">
+  
+  <li *ngFor="let document of documents">
+    {{document.id}} - {{document.title}}
+  </li>
+</ul>
+
+
+<div class="col-md-12">
+  <div class="card card-container">
+    <h3>Nuevo documento</h3>
+    <form
+      name="form"
+      (ngSubmit)="f.form.valid && onSubmit()"
+      #f="ngForm"
+      novalidate
+    >
+      <div class="form-group">
+        <label for="title">Titulo</label>
+        <input
+          type="text"
+          class="form-control"
+          name="title"
+          [(ngModel)]="form.title"
+          required
+          #title="ngModel"
+        />
+        <div
+          class="alert alert-danger"
+          role="alert"
+          *ngIf="f.submitted && title.invalid"
+        >
+          Título es requerido
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="file">Archivo</label>
+        <input
+          type="file"
+          class="form-control"
+          name="file"
+          [(ngModel)]="form.file"
+          required
+          minlength="6"
+          #file="ngModel"
+        />
+        <div
+          class="alert alert-danger"
+          role="alert"
+          *ngIf="f.submitted && file.invalid"
+        >
+          <div *ngIf="file.errors.required">Es requerido</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <button class="btn btn-primary btn-block">
+          Crear
+        </button>
+      </div>
+      <div class="form-group">
+        <div
+          class="alert alert-danger"
+          role="alert"
+          *ngIf="f.submitted && isUploadFailed"
+        >
+          Subit archivo falló: {{ errorMessage }}
+        </div>
+      </div>
+    </form>
+
+    <div class="alert alert-success" *ngIf="isUploaded">
+      Se subió el archivo {{ title }}.
+    </div>
+  </div>
+</div>

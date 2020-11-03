@@ -23,12 +23,12 @@
           maxlength="20"
           #id="ngModel"
         />
-        <div class="alert-danger" *ngIf="f.submitted && ids.invalid">
-          <div *ngIf="ids.errors.required">Cédula es requerido</div>
-          <div *ngIf="ids.errors.minlength">
+        <div class="alert-danger" *ngIf="f.submitted && id.invalid">
+          <div *ngIf="id.errors.required">Cédula es requerido</div>
+          <div *ngIf="id.errors.minlength">
             debe tener almenos 5 caracteres
           </div>
-          <div *ngIf="ids.errors.maxlength">
+          <div *ngIf="id.errors.maxlength">
             debe tener almenos 20 caracteres
           </div>
         </div>
@@ -51,6 +51,28 @@
             debe tener almenos 5 caracteres
           </div>
           <div *ngIf="name.errors.maxlength">
+            debe tener almenos 20 caracteres
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="name">Dirección</label>
+        <input
+          type="text"
+          class="form-control"
+          name="address"
+          [(ngModel)]="form.address"
+          required
+          minlength="3"
+          maxlength="20"
+          #address="ngModel"
+        />
+        <div class="alert-danger" *ngIf="f.submitted && address.invalid">
+          <div *ngIf="address.errors.required">Dirección es requerido</div>
+          <div *ngIf="address.errors.minlength">
+            debe tener almenos 5 caracteres
+          </div>
+          <div *ngIf="address.errors.maxlength">
             debe tener almenos 20 caracteres
           </div>
         </div>
@@ -92,7 +114,7 @@
         </div>
       </div>
       <div class="form-group">
-        <button class="btn btn-primary btn-block">Sign Up</button>
+        <button class="btn btn-primary btn-block">Registrarme</button>
       </div>
 
       <div class="alert alert-warning" *ngIf="f.submitted && isSignUpFailed">
